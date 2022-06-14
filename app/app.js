@@ -52,7 +52,7 @@ app.post("/simpleform", (req, res, next) => {
   res.locals.ageInDays = age * 365;
   res.locals.height = height;
   res.locals.heightCm = height * 2.54;
-  res.locals.version = "1.0.0";
+  res.locals.version = "1.0.2";
   res.locals.active = "simpleform";
   res.render("simpleformresult");
 });
