@@ -92,29 +92,31 @@ const family = [
   {name: "Ryan", age: 23},
 ];
 
-app.get("/showFamily", (req, res, next) => {
-  res.locals.family = family;
-  res.render("showFamily");
-});
+app.get('/showFamily',
+  (req,res,next) => {
+    res.locals.family = family;
+    res.render('showFamily');
+  })
 
-app.get("/apidemo/:email", async (req, res, next) => {
-  const email = req.params.email;
-  const response = await axios.get("https://www.cs.brandeis.edu/~tim/cs103aSpr22/courses20-21.json");
-  console.dir(response.data.length);
-  res.locals.courses = response.data.filter((c) => c.instructor[2] == email + "@brandeis.edu");
-  res.locals.active = " apidemo";
-  res.render("showCourses");
-  //res.json(response.data.slice(100,105));
-});
+app.get('/apidemo/:email',
+  async (req,res,next) => {
+    const email = req.params.email;
+    const response = await axios.get('https://www.cs.brandeis.edu/~tim/cs103aSpr22/courses20-21.json')
+    console.dir(response.data.length)
+    res.locals.courses = response.data.filter((c) => c.instructor[2]==email+"@brandeis.edu")
+    res.render('showCourses')
+    //res.json(response.data.slice(100,105));
+  })
 
-app.get("/githubInfo", async (req, res, next) => {
-  const response = await axios.get("https://api.github.com/users/etchjetty/repos");
-  console.dir(response.data.length);
-  res.locals.repos = response.data;
-  res.locals.active = " githubInfo";
-  res.render("showRepos");
-  //res.json(response.data.slice(100,105));
-});
+app.get('/githubInfo/:githubId',
+  async (req,res,next) => {
+    const id = req.params.githubId;
+    const response = await axios.get('https://api.github.com/users/'+id+'/repos')
+    console.dir(response.data.length)
+    res.locals.repos = response.data
+    res.render('showRepos')
+    //res.json(response.data.slice(100,105));
+  })
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
