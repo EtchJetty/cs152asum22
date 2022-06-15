@@ -1,24 +1,28 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get("/", function (req, res, next) {
+  res.locals.active = " index";
+  res.render("index", {title: "Express"});
 });
 
-router.use((req,res,next) => {
-   console.log("in the index router")
-   next()
-})
+router.use((req, res, next) => {
+  console.log("in the index router");
+  next();
+});
 
-router.get('/bio',
-  (req,res,next) => {
-   console.log("in the index router")
-   next()
+router.get(
+  "/bio",
+  (req, res, next) => {
+    console.log("in the index router");
+    next();
   },
-  (req,res,next) => {
-    res.render('bio')
+  (req, res, next) => {
+    res.locals.active = " bio";
+
+    res.render("bio");
   }
-)
+);
 
 module.exports = router;

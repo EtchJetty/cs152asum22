@@ -3,12 +3,22 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var livereload = require("livereload");
+var connectLiveReload = require("connect-livereload");
+
 const layouts = require("express-ejs-layouts");
+const liveReloadServer = livereload.createServer();
+liveReloadServer.server.once("connection", () => {
+  setTimeout(() => {
+    liveReloadServer.refresh("/");
+  }, 100);
+});
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
 var app = express();
+app.use(connectLiveReload());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -24,8 +34,24 @@ app.use(layouts);
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
+app.get("/dist", (req, res, next) => {
+  res.locals.active = " dist";
+  res.render("dist");
+});
+
+app.post("/dist", (req, res, next) => {
+  // res.json(req.body);
+  const {coordx, coordy, coordz} = req.body;
+  res.locals.coordx = coordx;
+  res.locals.coordy = coordy;
+  res.locals.coordz = coordz;
+  res.locals.resulted = Math.sqrt(coordx * coordx + coordy * coordy + coordz * coordz);
+  res.locals.active = " dist";
+  res.render("distresult");
+});
+
 app.get("/bmi", (req, res, next) => {
-  res.locals.active = "bmi";
+  res.locals.active = " bmi";
   res.render("bmi");
 });
 
@@ -35,12 +61,12 @@ app.post("/bmi", (req, res, next) => {
   res.locals.height = height;
   res.locals.weight = weight;
   res.locals.bmi = weight / (height ** 2 * 703);
-  res.locals.active = "bmi";
+  res.locals.active = " bmi";
   res.render("bmiresult");
 });
 
 app.get("/simpleform", (req, res, next) => {
-  res.locals.active = "simpleform";
+  res.locals.active = " simpleform";
   res.render("simpleform");
 });
 
@@ -53,7 +79,7 @@ app.post("/simpleform", (req, res, next) => {
   res.locals.height = height;
   res.locals.heightCm = height * 2.54;
   res.locals.version = "1.0.2";
-  res.locals.active = "simpleform";
+  res.locals.active = " simpleform";
   res.render("simpleformresult");
 });
 
@@ -67,6 +93,7 @@ app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.active = " error";
 
   // render the error page
   res.status(err.status || 500);
