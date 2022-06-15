@@ -11,7 +11,9 @@
                     <%= repo.name %>
                 </td>
                 <td>
-                    <%= repo.html_url %>
+                    <a class="link-primary text-decoration-none" href="<%= repo.html_url %>">
+                        <%= repo.html_url %>
+                    </a>
                 </td>
             </tr>
             <% } %>
