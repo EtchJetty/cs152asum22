@@ -5,11 +5,16 @@
         <th>name</th>
     </thead>
     <tbody>
-        <% for(repo of repos){%> 
-        <tr> 
-            <td><%= repo.name %> </td> 
-        </tr>
-        <% } %>
+        <% for(repo of repos){%>
+            <tr>
+                <td>
+                    <%= repo.name %>
+                </td>
+                <td>
+                    <%= repo.html_url %>
+                </td>
+            </tr>
+            <% } %>
     </tbody>
 </table>
 
