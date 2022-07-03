@@ -1,0 +1,18 @@
+<h1>Exam 6: Bug Reports</h1>
+<hr>
+<% for(report of reports){%>
+<h1>Bug Report:</h1>
+<p><%= report.shortdesc %></p>
+<p class="fst-italic"><%= report.longdesc %></p>
+<hr>
+<% } %> 
+<h1>Add bug report</h1>
+<form method="post" action="/exam6">
+  short bug description: <input type="text" name="shortdesc">
+  <br>
+  detailed description:
+  <br>
+  <textarea name="longdesc"></textarea>
+  <br>
+  <input type="submit">
+</form>
