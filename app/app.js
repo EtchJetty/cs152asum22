@@ -26,6 +26,7 @@ const courses = require("./public/data/courses20-21.json");
 
 const Course = require("./models/Course");
 const Contact = require("./models/Contact");
+const Contact = require("./models/Contact");
 
 // *********************************************************** //
 //  Connecting to the database
@@ -65,6 +66,29 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(layouts);
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
+app.post("/exam6", async (req, res, next) => {
+  try {
+    let newReport = new Report({
+      shortdesc: req.body.shortdesc,
+      longdesc: req.body.longdesc
+    });
+
+    await newReport.save();
+    res.redirect("/exam6");
+  } catch (e) {
+    next(e);
+  }
+});
+
+app.get("/exam6", async (req, res, next) => {
+  try {
+    res.locals.contacts = await Contact.find();
+    res.render("exam6");
+  } catch (e) {
+    next(e);
+  }
+});
 
 app.post("/exam5", async (req, res, next) => {
   try {
