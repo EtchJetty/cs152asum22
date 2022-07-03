@@ -1,0 +1,14 @@
+<h1>Show Meals</h1>
+
+<ul class="list-group">
+    <% for(meal of meals){%>
+
+        <li class="list-group-item">
+            <%= meal.strMeal %><br>
+                <img class="img img-fluid mw-50" src="<%= meal.strMealThumb %>" alt="<%= meal.strMeal %>">
+        </li>
+        <% } %>
+
+</ul>
+
+<pre><%= JSON.stringify(meals,null,5) %> </pre>
