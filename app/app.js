@@ -26,15 +26,15 @@ const courses = require("./public/data/courses20-21.json");
 
 const Course = require("./models/Course");
 const Contact = require("./models/Contact");
-const Contact = require("./models/Contact");
+const Report = require("./models/Report");
 
 // *********************************************************** //
 //  Connecting to the database
 // *********************************************************** //
 
 const mongoose = require("mongoose");
-const mongodb_URI = "mongodb://localhost:27017/cs103a_todo";
-//const mongodb_URI = 'mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+// const mongodb_URI = "mongodb://localhost:27017/cs103a_todo";
+const mongodb_URI = 'mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
 mongoose.connect(mongodb_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 // fix deprecation warnings
@@ -83,7 +83,7 @@ app.post("/exam6", async (req, res, next) => {
 
 app.get("/exam6", async (req, res, next) => {
   try {
-    res.locals.contacts = await Contact.find();
+    res.locals.reports = await Report.find();
     res.render("exam6");
   } catch (e) {
     next(e);
